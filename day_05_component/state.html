@@ -21,10 +21,13 @@
        // 定义组件
        class Like extends React.Component {
           constructor (props) {
+             super(props)
             // 初始化状态
             this.state = {
                isLikeMe:false
             }
+            // 将新增方法中的this强制绑定为组件对象
+            this.handleClick = this.handleClick.bind(this);
           }
 
           // 新添加方法：内部的this默认不是组件对象，而是underfind
