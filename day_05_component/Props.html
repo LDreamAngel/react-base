@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自定义组件案例练习</title>
+    <title>三大属性之Props属性</title>
 </head>
 <body>
    <div id="example"></div> 
 </body>
    <script type="text/javascript" src="../js/react.development.js"></script>
    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+   <script type="text/javascript" src="../js/prop-types.min.js"></script>
    <script type="text/javascript" src="../js/babel.min.js"></script>
 
    <script type="text/babel">
@@ -19,14 +20,26 @@
          * 2. 如果年龄没有指定，默认为18
          */
         // 定义组件
-         function Person(props){
-            return (
-               <ul>
-                  <li>姓名：{props.p1.name}</li>
-                  <li>年龄：{props.p1.age}</li>
-                  <li>性别：{props.p1.sex}</li>
-               </ul>
-            )
+         // function Person(props){
+         //    return (
+         //       <ul>
+         //          <li>姓名：{props.name}</li>
+         //          <li>年龄：{props.age}</li>
+         //          <li>性别：{props.sex}</li>
+         //       </ul>
+         //       )
+         //    }
+            
+         class Person extends React.Component{
+            render (){
+               return(
+                  <ul>
+                     <li>姓名：{this.props.name}</li>
+                     <li>年龄：{this.props.age}</li>
+                     <li>性别：{this.props.sex}</li>
+                  </ul>
+               )
+            }
          }
 
         // 指定属性默认值
@@ -47,6 +60,15 @@
           age:18,
           sex:'女'
        }
-       ReactDOM.render(<Person p1={p1} />,document.getElementById('example'));
+
+       /**
+       * ...的作用
+       * 1.打包
+       * eg: function fn (...as) {} fn(1,2,3)
+       * 2.解包
+       * const arr1 = [1,2,3] const arr2 = [6,...arr1,9]
+       */
+
+       ReactDOM.render(<Person {...p1} />,document.getElementById('example'));
    </script>
 </html>
