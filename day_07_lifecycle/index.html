@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+</head>
+<body>
+   <div id="example"></div> 
+</body>
+   <script type="text/javascript" src="../js/react.development.js"></script>
+   <script type="text/javascript" src="../js/react-dom.development.js"></script>
+   <script type="text/javascript" src="../js/prop-types.min.js"></script>
+   <script type="text/javascript" src="../js/babel.min.js"></script>
+
+   <script type="text/babel">
+        /**
+         * 需求：自定义包含表单的组件
+         *     1.让指定的文本做显示、隐藏的动画
+         *     2.切换时间为2S
+         *     3.不点击按钮从界面移除组件界面
+         */
+        // 定义组件
+         class Life extends React.Component {
+            constructor(props){
+               super(props);
+
+               // 初始化状态
+               this.state = {
+                  opacity:1
+               }
+               this.distroyComponent=this.distroyComponent.bind(this);
+            }
+
+            distroyComponent(){
+               ReactDOM.unmountComponentAtNode(document.getElementById('example'));
+            }
+
+            componentDidMount(){
+               // 启动循环定时器
+               this.intervalId = setInterval(function () {
+                  let {opacity} = this.state;
+                  opacity -= 0.1
+                  if (opacity<=0) {
+                     opacity = 1
+                  }
+                  this.setState({opacity});
+               }.bind(this),200)
+            }
+
+            componentWillUnmount(){
+               // 清除定时器
+               clearInterval(this.intervalId);
+            }
+
+            render (){
+               const {opacity} = this.state;
+               return (
+                  <div>
+                     <h2 style={{opacity}}>{this.props.msg}</h2>
+                     <button onClick={this.distroyComponent}>不活了</button>
+                  </div>
+               )
+            }
+         }
+
+       // 渲染组件标签
+
+       ReactDOM.render(<Life msg="react太难了！" />,document.getElementById('example'));
+   </script>
+</html>
